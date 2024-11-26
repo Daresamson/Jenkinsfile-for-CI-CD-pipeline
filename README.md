@@ -1,3 +1,16 @@
+![Screenshot (216)](https://github.com/user-attachments/assets/ab7c9585-cdf6-4ec6-9b88-01beae1244da)
+# This is the script in github
+
+
+![Screenshot (217)](https://github.com/user-attachments/assets/48be8294-fa0a-40ed-873a-edf19ddec92a)
+## Defininig the scrpit in Jenkins
+
+
+![Screenshot (219)](https://github.com/user-attachments/assets/051b99b5-7041-42b3-a262-0bd8b01857ff)
+## Console output after building it
+
+## This is the pipeline script
+
 pipeline {
     agent any
 
@@ -133,4 +146,39 @@ pipeline {
             echo 'Pipeline failed! Investigating issues...'
         }
     }
+
+# Step-by-Step Explanation of Key Features
+
+## Dependency Management:
+The ./gradlew build and ./gradlew test commands ensure dependencies are installed and managed (using Gradle or your chosen tool).
+Caching is implicitly supported by tools like Gradle to optimize dependency resolution.
+
+## Environment Configuration:
+Environment-specific credentials are securely managed using Jenkins Credentials Store (credentials() method).
+Error Handling:
+
+post { failure { ... } } blocks ensure proper notifications and logs in case of failures.
+The retry(2) option retries failed stages automatically.
+
+## Security:
+Sensitive credentials (e.g., DockerHub credentials) are stored securely using Jenkins Credentials Store.
+Pipeline secrets (e.g., API keys, passwords) are injected as environment variables and not hardcoded.
+
+
+## Scalability:
+The pipeline supports parallelism and efficient resource cleanup using Docker’s capabilities (e.g., docker system prune).
+
+
+## Monitoring and Logging:
+Test results are published with junit for visibility.
+Stages include echo statements for clear logs.
+Integration with monitoring tools like Slack or email can be added in post blocks.
+
+## Rollback Strategy:
+A rollback mechanism is implemented for production deployment failures, ensuring the pipeline reverts to a stable state.
+
+## Approval Process:
+The input step provides a manual approval checkpoint before deploying to production, ensuring stakeholder review.
+
+    
 }
